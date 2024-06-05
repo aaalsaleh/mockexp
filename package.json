@@ -6,9 +6,15 @@
     "email": "a.a.alsaleh@gmail.com",
     "url": "https://github.com/aaalsaleh"
   },
-  "description": "Mockup values generator using RegExp pattern",
+  "description": "Mockup value generator using RegExp pattern",
   "license": "MIT",
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aaalsaleh/mockexp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aaalsaleh/mockexp/issues"
+  },
   "keywords": [
     "mockexp",
     "regexp",
@@ -26,7 +32,6 @@
   "type": "module",
   "module": "./lib/index.js",
   "main": "./lib/index.cjs",
-  "browser": "./lib/bundle.min.js",
   "types": "./lib/index.d.ts",
   "exports": {
     ".": {
@@ -50,6 +55,7 @@
     "test:*": "TARGET=* node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
     "test:src": "TARGET=src node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
     "test:esm": "TARGET=esm node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
-    "test:cjs": "TARGET=cjs node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage"
+    "test:cjs": "TARGET=cjs node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
+    "prepare": "npm run build"
   }
 }
