@@ -56,35 +56,35 @@ MockExp.install();
 ## Configuration
 
 #### `MockExp.charset`
-Define the default charset used for `.`, negated charset `[^...]` and the classes `\D`, `\W`, `\S`. It must be a `RegExp` charset pattern `[...]`.
+Defines the default charset used for wildcards `.`, negated charsets `[^...]` and the classes `\D`, `\W`, `\S`, `\P{...}`. It must be a `RegExp` charset pattern `[...]`.
 
 If not set, the default charset is either `[\u0020-\u007E]` if `u` flag is not set, or `[\u0020-\u0FFD]` if `u` flag is set. Also, `[\u000A\u000D\u2028\u2029]` will be included if `s` flag is set.
 
-However, if `MockExp.charset` is set to a custom charset then all the above will be ignored and the this custom charset will be used instead.
+However, if `MockExp.charset` is set to a custom charset then all the above will be ignored and the custom charset will be used instead.
 
 #### `MockExp.maxRepetition`
-Define the maximum repetition limit for the quantifiers without an upper-limit: `*`, `+`, `{n,}`. The upper-limit will be a random number between the lower-limit and the lower-limit + `MocExp.maxRepetition` (inclusive). By default its value is 10.
+Defines the maximum repetition limit for the quantifiers without an upper-limit: `*`, `+`, `{n,}`. The upper-limit will be a random number between the lower-limit and the lower-limit + `MocExp.maxRepetition` (inclusive). By default its value is 10.
 
 #### `MockExp.maxAttempts`
-Define the maximum failed attempts to generate a valid `RegExp` patterns before giving up with an `Unsupported pattern` exception. Certain `RegExp` patterns are impossible to generate (e.g. impossible assertion or limited default charset). By default its value is 1000.
+Defines the maximum failed attempts to generate valid `RegExp` patterns before giving up with an `Unsupported pattern` exception. Certain `RegExp` patterns are impossible to generate (e.g. impossible assertion or limited default charset). By default its value is 1000.
 
 #### `MockExp.classes`
-Define the unicode classes for `\p{...}` and `\P{...}`. Each defined class must be assigned a `RegExp` charset pattern `[...]`. It will only be respected if `u` flag is set and the class is defined in `MockExp.classes`.
+Defines the unicode classes for `\p{...}` and `\P{...}`. Each defined class must be assigned a `RegExp` charset pattern `[...]`. It will only be respected if `u` flag is set and the class is defined in `MockExp.classes`.
 
 #### `MockExp.expressions`
-Define custom expressions to include in the pattern using the `\x{...}` non-standard syntax. Each defined expression must be assigned a value of either `string`, `RegExp`, `MockExp`, or `function():string`. Expressions can also re-use other predefined expressions. If the expression is not defined then the output will be `x{...}` as normally handled by `RegExp`.
+Defines custom expressions to be included in the pattern using the `\x{...}` non-standard syntax. Each defined expression must be assigned a value of either `string`, `RegExp`, `MockExp`, or `function():string`. Expressions can also reuse other predefined expressions. If the expression is not defined then the output will be `x{...}` as normally handled by `RegExp`.
 
 #### `MockExp.install()`
-Used to monkey patch `RegExp` with `generate` method if needed. While monkey patching can provide ease of use, it should be noted that it is generally considered a bad practice.
+Monkey patch `RegExp` class with `generate` method. While monkey patching can provide ease of use, it should be noted that it is generally considered a bad practice.
 
 ## Limitations
 * Experimental support for lookahead and lookbehind assertions.
-  * Tries its best to generate a value respecting all lookahead and lookbehind assertions.
+  * tries its best to generate a value that respects all lookahead and lookbehind assertions.
   * Throws an `Unsupported pattern` exception after it fails to generate the pattern (e.g. impossible pattern).
   * `MockExp.maxAttempts` controls how many attempts to try before it decides to give up on satisfying the assertions.
 * Limited support for unicode classes `\p{...}` and `\P{...}`.
   * Parses all `\p{...}` and `\P{...}` classes when `u` flag is set.
-  * Generate based on defined unicode classes in `MockExp.classes`.
+  * Generates based on defined Unicode classes in `MockExp.classes`.
   * Since the exact set of characters matched by unicode classes can change due to unicode standard changes, only manual definition of unicode classes is supported currently.
 * No support for the recent `v` mode flag.
   * No unicode classes intersection `&&` or subtraction `--` support.
