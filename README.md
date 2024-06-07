@@ -55,6 +55,9 @@ MockExp.install();
 
 ## Configuration
 
+#### `MockExp(pattern, flags?)`
+Accepts a `string` or `RegExp` pattern with optional `RegExp` flags. Only the flags `i`, `s`, `u` will affect the generated value.
+
 #### `MockExp.charset`
 Defines the default charset used for wildcards `.`, negated charsets `[^...]` and the classes `\D`, `\W`, `\S`, `\P{...}`. It must be a `RegExp` charset pattern `[...]`.
 
@@ -63,7 +66,7 @@ If not set, the default charset is either `[\u0020-\u007E]` if `u` flag is not s
 However, if `MockExp.charset` is set to a custom charset then all the above will be ignored and the custom charset will be used instead.
 
 #### `MockExp.maxRepetition`
-Defines the maximum repetition limit for the quantifiers without an upper-limit: `*`, `+`, `{n,}`. The upper-limit will be a random number between the lower-limit and the lower-limit + `MocExp.maxRepetition` (inclusive). By default its value is 10.
+Defines the maximum repetition limit for the quantifiers without an upper-limit: `*`, `+`, `{n,}`. The upper-limit will be a random number between the lower-limit and the lower-limit + `MockExp.maxRepetition` (inclusive). By default its value is 10.
 
 #### `MockExp.maxAttempts`
 Defines the maximum failed attempts to generate valid `RegExp` patterns before giving up with an `Unsupported pattern` exception. Certain `RegExp` patterns are impossible to generate (e.g. impossible assertion or limited default charset). By default its value is 1000.
@@ -74,12 +77,15 @@ Defines the unicode classes for `\p{...}` and `\P{...}`. Each defined class must
 #### `MockExp.expressions`
 Defines custom expressions to be included in the pattern using the `\x{...}` non-standard syntax. Each defined expression must be assigned a value of either `string`, `RegExp`, `MockExp`, or `function():string`. Expressions can also reuse other predefined expressions. If the expression is not defined then the output will be `x{...}` as normally handled by `RegExp`.
 
+#### `MockExp.randomInt(min, max)`
+Generates random integers between min and max (inclusive) using Math.random. Override if you need to control the randomness behavior (e.g. for seeded or cryptographic randomness).
+
 #### `MockExp.install()`
 Monkey patch `RegExp` class with `generate` method. While monkey patching can provide ease of use, it should be noted that it is generally considered a bad practice.
 
 ## Limitations
 * Experimental support for lookahead and lookbehind assertions.
-  * tries its best to generate a value that respects all lookahead and lookbehind assertions.
+  * Tries its best to generate a value that respects all lookahead and lookbehind assertions.
   * Throws an `Unsupported pattern` exception after it fails to generate the pattern (e.g. impossible pattern).
   * `MockExp.maxAttempts` controls how many attempts to try before it decides to give up on satisfying the assertions.
 * Limited support for unicode classes `\p{...}` and `\P{...}`.
